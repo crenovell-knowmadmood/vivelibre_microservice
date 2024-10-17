@@ -1,0 +1,16 @@
+[
+  {
+      "id":111,
+      "name": "Libro 1",
+      "summary": "Summary",
+      "authorBiography": "author bio",
+      "date": "01-10-2020"
+  },
+  {
+      "id":111,
+      "name": "Libro 2",
+      "summary": "Summary 2",
+      "authorBiography": "author bio 2",
+      "date": "01-10-2010"
+  }
+]
