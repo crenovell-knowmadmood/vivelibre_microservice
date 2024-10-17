@@ -10,7 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookServiceImpl implements BookServiceInterface{
 
   @Override
@@ -38,7 +40,8 @@ public class BookServiceImpl implements BookServiceInterface{
     String formattedDate = mostRecentBook.getPublicationDate().format(formatter);
 
     // Retornar el libro con el campo de fecha
-    return Optional.of(new BookDate(mostRecentBook, formattedDate));
-    return Optional.empty();
+    BookDate d = new BookDate(mostRecentBook, formattedDate);
+    return Optional.of(d);
+
   }
 }

@@ -18,17 +18,17 @@ public class BookControllerImpl implements BookController {
   BookServiceInterface bookService;
 
   @GetMapping("/get-token")
-  public ResponseEntity<Book> getBooks() {
-    int idBook = 1;
+  public ResponseEntity<BookDate> getBooks() {
+    Long idBook = 1l;
     List<Book> allBooks = List.of(
         Book.builder().id(idBook++).name("Libro1").build(),
         Book.builder().id(idBook++).name("Libro1").build(),
         Book.builder().id(idBook).name("Libro1").build()
     );
-    Optional<BookDate> result = bookService.filter("", allBooks)
+    BookDate result = bookService.filter("", allBooks)
         .orElse(null);
 
-    ResponseEntity<T> response = new ResponseEntity<>(result, HttpStatus.OK);
+    ResponseEntity<BookDate> response = new ResponseEntity<>(result, HttpStatus.OK);
     return response;
   }
 
