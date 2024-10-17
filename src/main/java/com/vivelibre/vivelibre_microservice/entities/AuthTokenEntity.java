@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class AuthTokenEntity {
+
   @JsonProperty("auth-vivelibre-token")
   private String token;
 

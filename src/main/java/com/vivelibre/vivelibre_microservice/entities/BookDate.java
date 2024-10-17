@@ -9,9 +9,10 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class BookDate {
-  @JsonProperty(required = true,value = "book")
+
+  @JsonProperty(required = true, value = "book")
   private Book book;
-  @JsonProperty(required = false,value = "date")
-  private String date; // Fecha en formato mm-dd-yyyy
+  @JsonProperty(required = false, value = "date")
+  private String date;
 
 }

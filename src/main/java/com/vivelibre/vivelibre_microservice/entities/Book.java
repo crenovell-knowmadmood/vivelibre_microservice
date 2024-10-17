@@ -14,7 +14,7 @@ public class Book {
   @JsonProperty(value = "id", required = true)
   private Long id;
 
-  @JsonProperty(value="name", required = true)
+  @JsonProperty(value = "name", required = true)
   private String name;
 
   @JsonProperty("summary")

@@ -1,0 +1,26 @@
+version: '3'
+services:
+  auth-service:
+    image: skeet15/auth-vivelibre
+    container_name: auth-service
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  app-service:
+    build:
+      context: .
+    container_name: vivelibre-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - auth-service
+    networks:
+      - app-network
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:8080/token
+
+networks:
+  app-network:
+    driver: bridge
