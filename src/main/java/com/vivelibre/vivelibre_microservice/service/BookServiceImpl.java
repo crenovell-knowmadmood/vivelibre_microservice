@@ -1,5 +1,6 @@
 package com.vivelibre.vivelibre_microservice.service;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 import com.vivelibre.vivelibre_microservice.entities.Book;
@@ -8,6 +9,7 @@ import com.vivelibre.vivelibre_microservice.entities.BookDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,16 @@ public class BookServiceImpl implements BookServiceInterface{
   public Optional<BookDate> filter(String filter, List<Book> books) {
 
     books.stream()
-        .filter(book -> nonNull(book.getPublicationDate()))
-        .forEach(book -> System.out.println("Libro sin fecha: " + book.getName()));
+        .filter(book -> isNull(book.getPublicationDate()))
+        .forEach(book -> System.out.println("Libro con fecha: " + book.getName()));
 
     List<Book> filteredBooks = books.stream()
         .filter(book -> (nonNull(book.getName())&& book.getName().contains(filter)) ||
             (nonNull(book.getSummary()) && book.getSummary().contains(filter)) ||
-            (nonNull(book.getAuthorBiography()) && book.getAuthorBiography().contains(filter)))
-        .sorted(Comparator.comparing(Book::getPublicationDate).reversed()) // Ordenar por fecha descendente
+            (nonNull(book.getAuthorBiography()) && book.getAuthorBiography().contains(filter)) && nonNull(book.getPublicationDate()))
+
+        .sorted(Comparator.comparing(Book::getPublicationDate).reversed())
+        .sorted(Comparator.comparing(Book::getAuthorBiography))
         .collect(Collectors.toList());
 
     if (filteredBooks.isEmpty()) {

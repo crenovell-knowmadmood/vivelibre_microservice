@@ -1,5 +1,7 @@
 package com.vivelibre.vivelibre_microservice.controller;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vivelibre.vivelibre_microservice.entities.Book;
@@ -23,8 +25,8 @@ public class BookControllerImpl implements BookController {
 
   @GetMapping("/get-books")
   public ResponseEntity<BookDate> getBooks() {
-    List<Book> allBooks = loadBooksFromJson();
-    BookDate result = bookService.filter("", allBooks)
+    final List<Book> allBooks = loadBooksFromJson();
+    final BookDate result = bookService.filter("Dalio", allBooks)
         .orElse(null);
 
     ResponseEntity<BookDate> response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -32,9 +34,9 @@ public class BookControllerImpl implements BookController {
   }
   private List<Book> loadBooksFromJson() {
     ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.findAndRegisterModules(); // Para manejar bien los LocalDate y otros tipos modernos de Java
+    objectMapper.setSerializationInclusion(Include.ALWAYS);
+    objectMapper.findAndRegisterModules();
 
-    // Cargar el archivo JSON desde el classpath (src/main/resources)
     try (InputStream inputStream = getClass().getResourceAsStream("/books.json")) {
       return objectMapper.readValue(inputStream, new TypeReference<List<Book>>() {});
     } catch (IOException e) {
