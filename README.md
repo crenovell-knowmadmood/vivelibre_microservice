@@ -1,12 +1,14 @@
 # Levantar el servicio en desarrollo
-Necesitaremos levantar la imagen Docker preparada en el script start.sh
+Necesitaremos levantar la imagen Docker preparada en el script start.sh.
+Esto levantará la imagen del docker que autenticará por el puerto 8081
 ````
 sh start.sh
 ````
-Después podemos levantar la imagen:
+Después podemos levantar la imagen en local y atacar al puerto previamente expuesto:
 ````
 mvn springboot:run -Dspring.profiles.active=local 
 ````
+
 # Construcción y ejecución de la imagen Docker
 ````
 docker-compose up --build
