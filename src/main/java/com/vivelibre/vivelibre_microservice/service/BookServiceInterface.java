@@ -7,5 +7,11 @@ import java.util.Optional;
 
 public interface BookServiceInterface {
 
+  /**
+   * Search for a string in any of the fields and gets the date of the most recent book.
+   * @param filter
+   * @param books
+   * @return
+   */
   Optional<BookDate> filter(String filter, List<Book> books);
 }

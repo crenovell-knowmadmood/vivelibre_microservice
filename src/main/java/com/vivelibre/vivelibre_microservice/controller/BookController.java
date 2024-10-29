@@ -5,5 +5,9 @@ import org.springframework.http.ResponseEntity;
 
 public interface BookController {
 
+  /**
+   * Gets the books filtered.
+   * @return
+   */
   ResponseEntity<BookDate> getBooks();
 }
