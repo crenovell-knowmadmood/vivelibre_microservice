@@ -36,14 +36,17 @@ class AuthServiceTest {
     final String expectedToken = "token";
     final String username = "auth-vivelibre";
     final String password = "password";
-    final ResponseEntity<String> re = new ResponseEntity<>(expectedToken, HttpStatus.OK);
-    AuthUser user = AuthUser.builder().username(username).password(password).build();
-    HttpEntity httpEntity = new HttpEntity(user);
+
+    final ResponseEntity<String> expectedResponseEntity = new ResponseEntity<>(expectedToken, HttpStatus.OK);
+    final AuthUser user = AuthUser.builder().username(username).password(password).build();
+    final HttpEntity httpEntity = new HttpEntity(user);
     final String authServiceUrl = (String) ReflectionTestUtils.getField(service, "authServiceUrl");
+
     when(restTemplate.exchange(eq(authServiceUrl), eq(HttpMethod.POST), eq(httpEntity), eq(String.class))
-    ).thenReturn(re);
-    final String token = service.getToken();
-    assertNotNull(token);
-    assertEquals(expectedToken, token);
+    ).thenReturn(expectedResponseEntity);
+    final String actualToken = service.getToken();
+
+    assertNotNull(actualToken);
+    assertEquals(expectedToken, actualToken);
   }
 }

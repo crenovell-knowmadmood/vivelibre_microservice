@@ -3,6 +3,7 @@ package com.vivelibre.vivelibre_microservice.service;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
+import com.vivelibre.vivelibre_microservice.comparators.BooksComparator;
 import com.vivelibre.vivelibre_microservice.entities.Book;
 import com.vivelibre.vivelibre_microservice.entities.BookDate;
 import java.time.format.DateTimeFormatter;
@@ -10,11 +11,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookServiceImpl implements BookServiceInterface {
 
+  @Autowired
+  BooksComparator comparator;
   @Override
   public Optional<BookDate> filter(String filter, List<Book> books) {
 
@@ -27,9 +31,7 @@ public class BookServiceImpl implements BookServiceInterface {
             (nonNull(book.getSummary()) && book.getSummary().contains(filter)) ||
             (nonNull(book.getAuthorBiography()) && book.getAuthorBiography().contains(filter)) && nonNull(
                 book.getPublicationDate()))
-
-        .sorted(Comparator.comparing(Book::getPublicationDate).reversed())
-        .sorted(Comparator.comparing(Book::getAuthorBiography))
+        .sorted(comparator)
         .collect(Collectors.toList());
 
     if (filteredBooks.isEmpty()) {

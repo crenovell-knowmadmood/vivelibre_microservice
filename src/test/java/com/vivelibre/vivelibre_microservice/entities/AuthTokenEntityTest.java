@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class AuthTokenEntityTest {
 
   @Test
-  void test(){
+  void testEntity(){
     final String token = "token";
     final String date = LocalDateTime.now().toString();
     final AuthTokenEntity entity = AuthTokenEntity.builder()

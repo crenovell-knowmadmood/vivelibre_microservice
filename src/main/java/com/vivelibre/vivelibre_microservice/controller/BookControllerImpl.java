@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,9 +23,9 @@ public class BookControllerImpl implements BookController {
   BookServiceInterface bookService;
 
   @GetMapping("/get-books")
-  public ResponseEntity<BookDate> getBooks() {
+  public ResponseEntity<BookDate> getBooks(@RequestParam("text") String text) {
     final List<Book> allBooks = loadBooksFromJson();
-    final BookDate result = bookService.filter("Dalio", allBooks)
+    final BookDate result = bookService.filter(text, allBooks)
         .orElse(null);
 
     ResponseEntity<BookDate> response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -37,7 +38,7 @@ public class BookControllerImpl implements BookController {
     objectMapper.findAndRegisterModules();
 
     try (InputStream inputStream = getClass().getResourceAsStream("/books.json")) {
-      return objectMapper.readValue(inputStream, new TypeReference<List<Book>>() {
+      return objectMapper.readValue(inputStream, new TypeReference<>() {
       });
     } catch (IOException e) {
       throw new RuntimeException("Error al cargar los libros desde books.json", e);
