@@ -42,7 +42,7 @@ class BooksComparatorTest extends BooksTestUtils {
     final Book b2 = createBook(id, expectedName, "Ray Dalio es un economista", "2024-10-23");
     int result = comparator.compare(b1, b2);
     final String msg = String.format("The book should be named as: %s", b2.getName());
-    
+
     assertEquals(1, result, msg);
   }
 
